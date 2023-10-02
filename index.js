@@ -1,65 +1,29 @@
-const http = require('http')
-const fs = require('fs');
-const port = 8080
+const express = require("express");
+const app = express();
+const port = 8080;
 
-const server = http.createServer((req, res) => {
-    const url = req.url
-    let fileName
+app.use(express.static("pages"));
 
-    if (url === '/index') {
-        fileName = './pages/index.html';
-    } else if (url === '/about') {
-        fileName = './pages/about.html';
-    } else if (url === '/contact') {
-        fileName = './pages/contact.html';
-    } else if (url === '/') {
-        fileName = './pages/index.html'; 
-    } else {
-        fileName = './pages/404.html';
-    }
-
-    fs.readFile(fileName, (error, data) => {
-        if (error) {
-            res.writeHead(404);
-            res.end('Error: File not found');
-        } else {
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end(data);
-        }
-    });
+app.get("/", function (req, res) {
+    res.sendFile(__dirname + "/pages/index.html");
 });
 
-server.listen(port, (error) => {
+app.get("/contact", function (req, res) {
+    res.sendFile(__dirname + "/pages/contact.html");
+});
+
+app.get("/about", function (req, res) {
+    res.sendFile(__dirname + "/pages/about.html");
+});
+
+app.get("*", function (req, res) {
+    res.sendFile(__dirname + "/pages/404.html");
+});
+
+app.listen(port, (error) => {
     if(error){
         console.log('something went wrong')
     } else {
         console.log('server listenging on port ' + port)
     }
 })
-
-// const server = http.createServer((req, res) => {
-//     const url = req.url
-//     let fileName
-
-//     if (url === '/index') {
-//         fileName = './pages/index.html';
-//     } else if (url === '/about') {
-//         fileName = './pages/about.html';
-//     } else if (url === '/contact') {
-//         fileName = './pages/contact.html';
-//     } else if (url === '/') {
-//         fileName = './pages/index.html'; 
-//     } else {
-//         fileName = './pages/404.html';
-//     }
-
-//     fs.readFile(fileName, (error, data) => {
-//         if (error) {
-//             res.writeHead(404);
-//             res.end('Error: File not found');
-//         } else {
-//             res.writeHead(200, { 'Content-Type': 'text/html' });
-//             res.end(data);
-//         }
-//     });
-// });
