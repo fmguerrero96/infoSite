@@ -16,6 +16,10 @@ app.get("/about", function (req, res) {
     res.sendFile(__dirname + "/pages/about.html");
 });
 
+app.get("*", function (req, res) {
+    res.sendFile(__dirname + "/pages/404.html");
+});
+
 app.listen(port, (error) => {
     if(error){
         console.log('something went wrong')
