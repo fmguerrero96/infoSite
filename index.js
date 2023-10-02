@@ -5,7 +5,15 @@ const port = 8080;
 app.use(express.static("pages"));
 
 app.get("/", function (req, res) {
-    res.sendFile(__infoSite + "/pages/index.html");
+    res.sendFile(__dirname + "/pages/index.html");
+});
+
+app.get("/contact", function (req, res) {
+    res.sendFile(__dirname + "/pages/contact.html");
+});
+
+app.get("/about", function (req, res) {
+    res.sendFile(__dirname + "/pages/about.html");
 });
 
 app.listen(port, (error) => {
